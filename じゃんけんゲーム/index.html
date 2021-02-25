@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>じゃんけんゲーム</title>
+</head>
+<body>
+    <div id="app">
+        <h1>結果は：{{ result }}</h1>
+        <p>勝ち: {{ win }} 負け: {{ lose }}引き分け：{{ half }}</p>
+        <div class="enemy">
+            相手：{{eHand}}
+        </div>
+        <div class="p">
+            <p @click="rps('goo')" class="goo"><img src="images/goo.png" alt=""></p>
+            <p @click="rps('choki')" class="choki"><img src="images/choki.png" alt=""></p>
+            <p @click="rps('paa')" class="paa"><img src="images/paa.png" alt=""></p>
+        </div>
+        
+    </div>
+
+
+
+    <script>
+        new Vue ({
+            el: "#app",
+            data: {
+                choices: ['goo', 'choki', 'paa'],
+                eHand: "",
+                result: "",
+                win: "",
+                lose: "",
+                half: "",
+            },
+            methods: {
+                rps: function(choice) {
+                    let index = Math.floor(Math.random() * Math.floor(3));
+                    this.eHand = this.choices[index];
+                    //  }
+                    console.log('敵の手：' + this.eHand)
+                    console.log('自分の手：' + choice)
+                    if(choice === this.eHand) {     
+                        this.result = ('引き分け')
+                        this.half++;
+                    }
+                    if (this.eHand === 'goo' && choice === 'paa'){
+                        this.result = ('勝ち')
+                        this.win++;
+                    }
+                    if (this.eHand === 'choki' && choice === 'goo'){
+                        this.result = ('勝ち')
+                        this.win++;
+                    }
+                    if (this.eHand === 'paa' && choice === 'choki'){
+                        this.result = ('勝ち')
+                        this.win++;
+                    }
+                    if (this.eHand === 'choki' && choice === 'paa'){
+                        this.result = ('負け・・・')
+                        this.lose++;
+                    }
+                    if (this.eHand === 'paa' && choice === 'goo'){
+                        this.result = ('負け・・・')
+                        this.lose++;
+                    }
+                    if (this.eHand === 'goo' && choice === 'choki'){
+                        this.result = ('負け・・・')
+                        this.lose++;
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>
